@@ -1,0 +1,4 @@
+export("subcopem")
+export("subcopemc")
+importFrom("grDevices", "dev.new", "heat.colors")
+importFrom("graphics", "contour", "hist", "image", "par", "plot", "points")
