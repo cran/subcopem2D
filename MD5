@@ -1,7 +1,8 @@
-f46aa485c244933fedb7820acc63cdd4 *DESCRIPTION
-c4404f32e47657d6196fac17516ee4f9 *NAMESPACE
-08622d801d97ba992fdd1c51d1f7db54 *R/subcopem.R
-50f14721bfd2b1c3f065bc02e2ef69c8 *R/subcopem2D-internal.R
-12371288740ad85627007ee404ed3a47 *R/subcopemc.R
-37079c49d252cb1c842c7642824f35b4 *man/subcopem.Rd
-50613f8b3e4d0ad103a1bc88023848da *man/subcopemc.Rd
+6e695213cbade51a3107c3b9ad3b0a3e *DESCRIPTION
+c3941131c91f08e10a6b9f4de2ad1cdf *NAMESPACE
+3cd3307b5d55920a939decc82d09ade0 *R/dependence.R
+07a40af83e9f72c191f66e98d68ba6b2 *R/subcopem.R
+a898bcd7fe5aee84286bf09728ec5292 *R/subcopemc.R
+bb2fa96064efb3163a20f191561d3d5f *man/dependence.Rd
+a0b4f1e8c1f591414af0f55fd905ef4f *man/subcopem.Rd
+47907f3c8f850d45268ea4000a9f8d3c *man/subcopemc.Rd

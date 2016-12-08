@@ -2,16 +2,17 @@ subcopem <-
 function(mat.xy, display = FALSE){
 # 
 # Input:  mat.xy = 2-column matrix with bivariate observations of (X,Y)
-#                  ** repeated values are allowed
-#                  ** slow for continuous sample size > 2000 (time > 2 min)
-#                     => should better use <subcopemc> instead
+#                  ** repeated values are allowed, NA values not allowed
+#                  ** slow if number of distinct values > 2000 (time > 2 min)
+#                  ** if X,Y continuous => should better use <subcopemc> instead
 #
 # Output: Empirical 2-subcopula matrix, induced partitions,
 #         standardized sample, and dependence measures
-#              depMon = monotone standardized L1 distance [-1,1]
-#               depL1 = standardized L1 distance [0,1]
-#               depL2 = standardized L2 distance [0,1]
-#         ** if display = TRUE dep measures and graphs are displayed
+#              depMon = monotone standardized supremum distance in [-1,1]
+#        depMonNonSTD = monotone non-standardized supremum distance [min,value,max]
+#              depSup = standardized supremum distance in [0,1]
+#        depSupNonSTD = non-standardized supremum distance [min,value,max]
+#       ** if display = TRUE then dependence measures and graphs are displayed
 #
   n <- nrow(mat.xy)  # sample size
   X <- mat.xy[ , 1]  # X observed values
@@ -46,40 +47,42 @@ function(mat.xy, display = FALSE){
   subcopM <- outer(partQ1, partQ2, M)  # upper bound subcopula
   subcopW <- outer(partQ1, partQ2, W)  # lower bound subcopula
   subcopP <- outer(partQ1, partQ2, P)  # product subcopula (independence)
-  dsgn <- function(A, B) sum(A - B)  # signed distance
-  dL1 <- function(A, B) sum(abs(A - B))  # L1 distance
-  dL2 <- function(A, B) sqrt(sum((A - B)^2))  # L2 distance
+  dsgn <- function(A, B) max(A - B) - max(B - A)  # signed supremum distance
+  dsup <- function(A, B) max(abs(A - B))  # supremum distance
   Msgn <- dsgn(subcopM, subcopP)  # upper bound signed distance
-  Wsgn <- dsgn(subcopP, subcopW)  # lower bound signed distance
-  sgnBound <- max(Msgn, Wsgn)  # signed distance bound
-  depMon <- dsgn(subcopula, subcopP)/sgnBound  # monotone standardized L1 distance
-  ML1 <- dL1(subcopM, subcopP)  # upper bound L1 distance
-  WL1 <- dL1(subcopP, subcopW)  # lower bound L1 distance
-  L1bound <- max(ML1, WL1)  # L1 distance bound
-  depL1 <- dL1(subcopula, subcopP)/L1bound  # standardized L1 distance
-  ML2 <- dL2(subcopM, subcopP)  # upper bound L2 distance
-  WL2 <- dL2(subcopP, subcopW)  # lower bound L2 distance
-  L2bound <- max(ML2, WL2)  # L2 distance bound
-  depL2 <- dL2(subcopula, subcopP)/L2bound  # L2 distance bound
+  Wsgn <- dsgn(subcopW, subcopP)  # lower bound signed distance
+  d <- dsgn(subcopula, subcopP)
+  depMon <- (d >= 0)*d/Msgn - (d < 0)*d/Wsgn  # monotone standardized supremum distance
+  depMonNonSTD <- c(4*Wsgn, 4*d, 4*Msgn) # monotone non-standardized supremum distance
+  names(depMonNonSTD) <- c("min", "value", "max")
+  Msup <- dsup(subcopM, subcopP)  # upper bound supremum distance
+  Wsup <- dsup(subcopW, subcopP)  # lower bound supremum distance
+  supBound <- max(Msup, Wsup)  # supremum distance bound
+  depSup <- dsup(subcopula, subcopP)/supBound  # standardized supremum distance
+  depSupNonSTD <- c(0, 4*supBound*depSup, 4*supBound) # non-standardized supremum distance
+  names(depSupNonSTD) <- c("min", "value", "max")
 # Output:
-  SC <- list(depMon = depMon, depL1 = depL1, depL2 = depL2, 
-             matrix = subcopula, part1 = partQ1, part2 = partQ2,
-             sample.size = n, std.sample = muestra.std, sample = mat.xy)
+  SC <- list(depMon = depMon, depMonNonSTD = depMonNonSTD, depSup = depSup,
+             depSupNonSTD = depSupNonSTD, matrix = subcopula, part1 = partQ1, 
+             part2 = partQ2, sample.size = n, std.sample = muestra.std, sample = mat.xy)
   if (display == TRUE){
-    message("monotone distance = ", round(depMon, 8))
-    message("  std L1 distance = ", round(depL1, 8))
-    message("  std L2 distance = ", round(depL2, 8))
-    dev.new(); par(mfcol = c(2, 3))
+    message("monotone dependence = [ -1 , ", round(depMon, 8), " , 1 ]")
+    message("non-std interval = [ ", round(depMonNonSTD[1], 8), " , ",
+            round(depMonNonSTD[2], 8), " , ", round(depMonNonSTD[3], 8), " ]")
+    message("supremum dependence = [ 0 , ", round(depSup, 8), " , 1 ]")
+    message("non-std interval = [ ", round(depSupNonSTD[1], 8), " , ",
+            round(depSupNonSTD[2], 8), " , ", round(depSupNonSTD[3], 8), " ]")
+    dev.new(); par(mfcol = c(2,  3))
     hist(mat.xy[ , 1], main = "histogram", xlab = "X")
     hist(mat.xy[ , 2], main = "histogram", xlab = "Y")
     plot(mat.xy, main = "sample", xlab = "X", ylab = "Y")
     plot(c(0, 1), c(0, 1), type = "n", main = "standardized sample", ylab = "",
-         xlab = paste("monotone distance =", round(depMon, 3)))
+         xlab = paste("monotone dependence =", round(depMon, 3)))
     points(muestra.std)
     contour(partQ1, partQ2, subcopula, nlevels = 20, main = "subcopula", ylab = "",
-            xlab = paste("std L2 distance =", round(depL2, 3)))
+            xlab = "")
     image(partQ1, partQ2, subcopula, col = heat.colors(20), main = "subcopula", ylab = "",
-          xlab = paste("std L1 distance =", round(depL1, 3)))   
+          xlab = paste("supremum dependence =", round(depSup, 3)))   
   }
   return(SC) 
 }
