@@ -45,9 +45,10 @@ function(mat, cont = NULL, sc.order = 0){
         deparray[j, i, "depMon"] <- deparray[i, j, "depMon"]
         deparray[i, j, "depSup"] <- SC$depSup
         deparray[j, i, "depSup"] <- deparray[i, j, "depSup"]
+        deparray[i, j, "depMonSupRatio"] <- SC$depMonNonSTD[2]/SC$depSupNonSTD[2]
+        deparray[j, i, "depMonSupRatio"] <- deparray[i, j, "depMonSupRatio"]
       }
     }
   }
-  deparray[ , , "depMonSupRatio"] <- deparray[ , , "depMon"]/deparray[ , , "depSup"]
   return(deparray)
 }

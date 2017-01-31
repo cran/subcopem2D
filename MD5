@@ -1,8 +1,9 @@
-6e695213cbade51a3107c3b9ad3b0a3e *DESCRIPTION
+5c88b1668a9fd3c822fe824da6be0516 *DESCRIPTION
+438bc16fd985ab09146fa771b58c3c76 *INDEX
 c3941131c91f08e10a6b9f4de2ad1cdf *NAMESPACE
-3cd3307b5d55920a939decc82d09ade0 *R/dependence.R
+bd38e4068208b619dad7242200081091 *R/dependence.R
 07a40af83e9f72c191f66e98d68ba6b2 *R/subcopem.R
 a898bcd7fe5aee84286bf09728ec5292 *R/subcopemc.R
-bb2fa96064efb3163a20f191561d3d5f *man/dependence.Rd
+e9318cae9ec6565b84990a4a9c310e73 *man/dependence.Rd
 a0b4f1e8c1f591414af0f55fd905ef4f *man/subcopem.Rd
 47907f3c8f850d45268ea4000a9f8d3c *man/subcopemc.Rd

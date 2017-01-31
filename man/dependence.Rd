@@ -24,7 +24,7 @@ dependence(mat, cont = NULL, sc.order = 0)
   Each of the random variables in the \eqn{k}-dimensional random vector under consideration may be of any kind (discrete, continuous, or mixed). NA values are allowed.
 }
 \value{
-A 3-dimensional array \eqn{k\times k\times 3} with pairwise monotone and supremum dependence, monotone/supremum dependence ratio, and proportion of pairwise NAs.
+A 3-dimensional array \eqn{k\times k\times 4} with pairwise monotone and supremum dependence, monotone/supremum dependence ratio, and proportion of pairwise NAs.
 }
 \references{
 Erdely, A. (2016) \emph{A subcopula based dependence measure}. arXiv:1610.00780[math.ST]
