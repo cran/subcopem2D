@@ -27,7 +27,7 @@ dependence(mat, cont = NULL, sc.order = 0)
 A 3-dimensional array \eqn{k\times k\times 4} with pairwise monotone and supremum dependence, monotone/supremum dependence ratio, and proportion of pairwise NAs.
 }
 \references{
-Erdely, A. (2016) \emph{A subcopula based dependence measure}. arXiv:1610.00780[math.ST]
+Erdely, A. (2017) \emph{A subcopula based dependence measure}. Kybernetika 53(2), 231-243. DOI: 10.14736/kyb-2017-2-0231
 
 Nelsen, R.B. (2006) \emph{An Introduction to Copulas}. Springer, New York.
 }

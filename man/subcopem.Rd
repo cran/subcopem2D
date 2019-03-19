@@ -39,7 +39,7 @@ subcopem(mat.xy, display = FALSE)
 \references{
 Durante, F. and Sempi, C. (2016) \emph{Principles of Copula Theory}. Taylor and Francis Group, Boca Raton.
 
-Erdely, A. (2016) \emph{A subcopula based dependence measure}. arXiv:1610.00780[math.ST]
+Erdely, A. (2017) \emph{A subcopula based dependence measure}. Kybernetika 53(2), 231-243. DOI: 10.14736/kyb-2017-2-0231
 
 Nelsen, R.B. (2006) \emph{An Introduction to Copulas}. Springer, New York.
 }
